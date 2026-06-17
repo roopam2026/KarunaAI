@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
+  --color-karuna-bg: #f5f5f0;
+  --color-karuna-olive: #5A5A40;
+  --color-karuna-cream: #FFFFFF;
+}
+
+body {
+  @apply bg-karuna-bg text-stone-800 font-sans antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}
+
+.card {
+  @apply bg-karuna-cream rounded-[32px] shadow-sm border border-stone-200/50;
+}
+
+.olive-button {
+  @apply bg-karuna-olive text-white rounded-full px-6 py-3 transition-all hover:opacity-90 active:scale-95 disabled:opacity-50;
+}
+
+.serif-italic {
+  @apply font-serif italic;
+}

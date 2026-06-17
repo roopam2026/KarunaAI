@@ -1,0 +1,6 @@
+{
+  "name": "KarunaAI",
+  "description": "An AI platform designed to augment human intelligence by increasing societal compassion through modeling caring behaviors and prosocial nudges.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
