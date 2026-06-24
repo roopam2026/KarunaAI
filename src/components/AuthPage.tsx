@@ -5,7 +5,7 @@ import Logo from './Logo';
 
 interface AuthPageProps {
   onBack: () => void;
-  onSuccess: (username: string) => void;
+  onSuccess: (email: string, username: string) => void;
 }
 
 export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
@@ -29,7 +29,7 @@ export default function AuthPage({ onBack, onSuccess }: AuthPageProps) {
       
       // Auto-return on success after brief presentation of success state
       setTimeout(() => {
-        onSuccess(displayDisplayName);
+        onSuccess(email, displayDisplayName);
       }, 1500);
     }, 1200);
   };

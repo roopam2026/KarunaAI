@@ -4,18 +4,23 @@ import CompassionChat from './components/CompassionChat';
 import NotificationSystem from './components/NotificationSystem';
 import Logo from './components/Logo';
 import AuthPage from './components/AuthPage';
+import KindnessJournal from './components/KindnessJournal';
+import KarunaIndex from './components/KarunaIndex';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'auth'>('home');
   const [username, setUsername] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const handleAuthSuccess = (name: string) => {
+  const handleAuthSuccess = (email: string, name: string) => {
     setUsername(name);
+    setUserEmail(email);
     setCurrentView('home');
   };
 
   const handleSignOut = () => {
     setUsername(null);
+    setUserEmail(null);
   };
 
   if (currentView === 'auth') {
@@ -67,6 +72,22 @@ export default function App() {
         <div className="max-w-4xl mx-auto w-full">
           <CompassionChat />
         </div>
+
+        {/* Karuna Index Calculator */}
+        <div className="max-w-4xl mx-auto w-full">
+          <KarunaIndex 
+            userEmail={userEmail} 
+            username={username} 
+            onSignInClick={() => setCurrentView('auth')} 
+          />
+        </div>
+
+        {/* Second App Interface (Kindness Ledger & Reflection Journal) - displayed after sign in */}
+        {username && userEmail && (
+          <div className="max-w-4xl mx-auto w-full">
+            <KindnessJournal userEmail={userEmail} username={username} />
+          </div>
+        )}
 
         {/* Global Pop-up Notification Engine */}
         <NotificationSystem />
