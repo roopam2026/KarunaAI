@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Heart, Smile, CheckCircle, Calendar, TrendingUp, Sparkles, Plus, Award, Activity, Compass, Search, Filter, ChevronRight, Info } from 'lucide-react';
+import { 
+  BookOpen, Heart, Smile, CheckCircle, Calendar, TrendingUp, Sparkles, Plus, 
+  Award, Activity, Compass, Search, Filter, ChevronRight, Info, HeartHandshake, SmilePlus 
+} from 'lucide-react';
 
 interface KindnessJournalProps {
   userEmail: string;
@@ -79,32 +82,32 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
   let rankName = "Seed of Awareness";
   let rankDescription = "Every great forest begins with a single seed of mindful attention. Start writing reflections and completing kindness challenges to nurture your empathy.";
   let rankQuote = "Though your journey is in its infancy, the seed of compassion is planted. Water it with daily awareness.";
-  let rankColor = "text-emerald-600 bg-emerald-50 border-emerald-100";
+  let rankColor = "text-emerald-600 bg-emerald-50/80 border-emerald-100";
   let ringColor = "stroke-emerald-500 font-bold";
 
   if (karunaIndex > 20 && karunaIndex <= 40) {
     rankName = "Sprouting Compassion";
     rankDescription = "Your empathy is taking root. Each mindful reflection and small act of kindness is nourishing the soil of human connection around you.";
     rankQuote = "Small sprouts break the hardest ground. Keep reflecting, keep giving, and watch your impact expand.";
-    rankColor = "text-teal-600 bg-teal-50 border-teal-100";
+    rankColor = "text-teal-600 bg-teal-50/80 border-teal-100";
     ringColor = "stroke-teal-500 font-bold";
   } else if (karunaIndex > 40 && karunaIndex <= 60) {
     rankName = "Budding Harmony";
     rankDescription = "A balanced warmth is emerging. You are actively reconciling self-reflection with outward prosocial behavior, bridging the gap between minds.";
     rankQuote = "In harmony with others, we find ourselves. Your daily practice of outrospection is creating ripples of peace.";
-    rankColor = "text-stone-700 bg-stone-100/80 border-stone-200";
+    rankColor = "text-stone-750 bg-stone-100/90 border-stone-200";
     ringColor = "stroke-karuna-olive font-bold";
   } else if (karunaIndex > 60 && karunaIndex <= 80) {
     rankName = "Empathetic Beacon";
     rankDescription = "You are a steady source of understanding and support for those in your sphere. Your awareness guides others toward compassionate pathways.";
     rankQuote = "To be a beacon is to hold space for others without losing your own ground. Continue shining your mindful presence.";
-    rankColor = "text-amber-600 bg-amber-50 border-amber-100";
+    rankColor = "text-amber-600 bg-amber-50/80 border-amber-100";
     ringColor = "stroke-amber-500 font-bold";
   } else if (karunaIndex > 80) {
     rankName = "Luminous Altruist";
     rankDescription = "A true practitioner of compassionate living. Your highly integrated habit of empathy, reflection, and actions helps dissolve the illusion of separateness.";
     rankQuote = "When the boundary between self and other dissolves, pure light remains. Your luminous care elevates our shared humanity.";
-    rankColor = "text-rose-600 bg-rose-50 border-rose-100";
+    rankColor = "text-rose-600 bg-rose-50/80 border-rose-100";
     ringColor = "stroke-rose-500 font-bold";
   }
 
@@ -234,94 +237,98 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
   };
 
   return (
-    <div className="card border border-stone-200/80 shadow-lg overflow-hidden bg-white/95 mt-10">
-      {/* Title Header */}
-      <div className="p-6 md:p-8 bg-gradient-to-r from-karuna-olive/10 to-amber-500/5 border-b border-stone-100 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="card overflow-hidden bg-white/95 border border-stone-250/40 shadow-xl shadow-stone-100/30">
+      
+      {/* Visual Header Grid */}
+      <div className="p-6 md:p-8 bg-gradient-to-r from-karuna-olive/5 via-amber-500/2 to-stone-50 border-b border-stone-150 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div>
-          <span className="text-[10px] tracking-widest uppercase font-bold text-karuna-olive flex items-center gap-1.5 mb-1">
+          <span className="text-[10px] tracking-widest uppercase font-bold text-karuna-olive flex items-center gap-1.5 mb-2">
             <Award size={12} className="text-amber-500" />
-            Empathy ledger & Journaling App
+            Empathy Ledger & Reflection Journal
           </span>
-          <h2 className="text-3xl font-serif text-stone-800">
-            Welcome back, <span className="serif-italic font-medium text-karuna-olive">{username}</span>
+          <h2 className="text-2xl md:text-3xl font-serif text-stone-900 font-bold tracking-tight">
+            Welcome back, <span className="serif-italic text-karuna-olive font-medium">{username}</span>
           </h2>
-          <p className="text-stone-500 text-xs mt-1">
-            Your personalized local sanctuary to track kindness milestones, emotional metrics, and reflect with compassion.
+          <p className="text-stone-500 text-xs mt-1.5 max-w-xl font-light leading-relaxed">
+            Your personalized digital sanctuary to log internal insights, record outward altruism milestones, and visualize emotional metrics across days.
           </p>
         </div>
 
-        {/* Tab Selection */}
-        <div className="flex bg-stone-100/80 p-1 rounded-full w-fit">
+        {/* Custom Tab Pills */}
+        <div className="flex bg-stone-100/80 p-1 rounded-full w-fit border border-stone-200/50 shrink-0">
           <button
             onClick={() => setActiveTab('journal')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 flex items-center gap-2 ${
               activeTab === 'journal' 
-                ? 'bg-white text-stone-850 shadow-sm font-bold' 
-                : 'text-stone-500 hover:text-stone-700'
+                ? 'bg-white text-stone-900 shadow-sm font-bold' 
+                : 'text-stone-500 hover:text-stone-800'
             }`}
           >
-            <BookOpen size={14} />
+            <BookOpen size={13} />
             <span>Reflections</span>
           </button>
           
           <button
             onClick={() => setActiveTab('kindness')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 flex items-center gap-2 ${
               activeTab === 'kindness' 
-                ? 'bg-white text-stone-850 shadow-sm font-bold' 
-                : 'text-stone-500 hover:text-stone-700'
+                ? 'bg-white text-stone-900 shadow-sm font-bold' 
+                : 'text-stone-500 hover:text-stone-800'
             }`}
           >
-            <Heart size={14} />
+            <Heart size={13} />
             <span>Kindness Acts</span>
           </button>
           
           <button
             onClick={() => setActiveTab('insights')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 flex items-center gap-2 ${
               activeTab === 'insights' 
-                ? 'bg-white text-stone-850 shadow-sm font-bold' 
-                : 'text-stone-500 hover:text-stone-700'
+                ? 'bg-white text-stone-900 shadow-sm font-bold' 
+                : 'text-stone-500 hover:text-stone-800'
             }`}
           >
-            <TrendingUp size={14} />
-            <span>Metrics</span>
+            <TrendingUp size={13} />
+            <span>Insights Hub</span>
           </button>
         </div>
       </div>
 
+      {/* Main Tab Content */}
       <div className="p-6 md:p-8">
         <AnimatePresence mode="wait">
+          
+          {/* Tab 1: Reflection Journal */}
           {activeTab === 'journal' && (
             <motion.div
               key="journal-tab"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8"
             >
-              {/* Journal Creation form (5 columns) */}
+              {/* Form Column (5 cols) */}
               <div className="lg:col-span-5 space-y-6">
-                <div className="bg-stone-50 p-6 rounded-2xl border border-stone-100">
-                  <h3 className="font-serif text-lg text-stone-850 mb-4 flex items-center gap-2 font-semibold">
-                    <Compass size={18} className="text-karuna-olive" />
-                    Write Reflection
+                <div className="bg-stone-50/50 p-5 md:p-6 rounded-2xl border border-stone-200/50 space-y-4">
+                  <h3 className="font-serif text-lg text-stone-900 font-bold flex items-center gap-2 pb-2 border-b border-stone-150">
+                    <SmilePlus size={16} className="text-karuna-olive" />
+                    Pen your Reflection
                   </h3>
                   
                   <form onSubmit={handleSaveJournal} className="space-y-4">
-                    <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500">How are you feeling?</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">Emotion Key</label>
                       <div className="grid grid-cols-3 gap-2">
                         {emotions.map((em) => (
                           <button
                             key={em}
                             type="button"
                             onClick={() => setJournalEmotion(em)}
-                            className={`py-2 text-[11px] font-semibold border rounded-xl transition-all ${
+                            className={`py-2 text-[11px] font-semibold border rounded-xl transition-all duration-300 ${
                               journalEmotion === em 
-                                ? 'bg-karuna-olive/15 text-karuna-olive border-karuna-olive/30 ring-1 ring-karuna-olive/10 font-bold' 
-                                : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-100'
+                                ? 'bg-karuna-olive/10 text-karuna-olive border-karuna-olive/30 ring-2 ring-karuna-olive/5 font-bold' 
+                                : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-100 hover:scale-[1.02]'
                             }`}
                           >
                             {em}
@@ -330,49 +337,49 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                       </div>
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500">Compassion Score ({compassionRating}/5)</label>
-                      <div className="flex gap-2 items-center">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">Compassion Self-Rating (1-5)</label>
+                      <div className="flex gap-2">
                         {[1, 2, 3, 4, 5].map((rating) => (
                           <button
                             key={rating}
                             type="button"
                             onClick={() => setCompassionRating(rating)}
-                            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border ${
-                              compassionRating >= rating
-                                ? 'bg-amber-400 border-amber-400 text-stone-900 font-bold'
-                                : 'bg-white border-stone-200 text-stone-400'
+                            className={`flex-1 py-1.5 rounded-lg border text-xs font-bold transition-all duration-300 ${
+                              compassionRating === rating 
+                                ? 'bg-amber-400 border-amber-400 text-stone-900 shadow-sm font-extrabold scale-105' 
+                                : 'bg-white border-stone-200 text-stone-500 hover:bg-stone-50'
                             }`}
                           >
-                            <Heart size={14} className={compassionRating >= rating ? "fill-current text-stone-900" : ""} />
+                            {rating}
                           </button>
                         ))}
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500">My Reflection</label>
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">Your realization</label>
                       <textarea
                         required
                         rows={4}
-                        placeholder="What happened today? Did you show compassion or encounter active listening?"
+                        placeholder="Pour out what you observed inside today. How can you hold deep presence for others?"
                         value={journalContent}
                         onChange={(e) => setJournalContent(e.target.value)}
-                        className="w-full bg-white border border-stone-200 focus:border-karuna-olive/40 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs outline-none text-stone-800 transition-all resize-none"
+                        className="w-full bg-white border border-stone-250 focus:border-karuna-olive/50 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs sm:text-sm outline-none text-stone-850 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSavingJournal || !journalContent.trim()}
-                      className="olive-button w-full py-3 text-xs flex items-center justify-center gap-2"
+                      className="olive-button w-full py-3.5 text-xs flex items-center justify-center gap-2"
                     >
                       {isSavingJournal ? (
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
                         <>
                           <Plus size={14} />
-                          <span>Save to Ledger</span>
+                          <span>Record Reflection</span>
                         </>
                       )}
                     </button>
@@ -380,25 +387,25 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                 </div>
               </div>
 
-              {/* Journal Feed (7 columns) */}
+              {/* List Feed Column (7 cols) */}
               <div className="lg:col-span-7 space-y-4">
-                <div className="flex items-center gap-2 border border-stone-200 rounded-full px-4 py-2.5 bg-stone-50">
+                <div className="flex items-center gap-2 border border-stone-200 rounded-full px-4 py-2.5 bg-stone-50/70 focus-within:ring-2 focus-within:ring-karuna-olive/15 transition-all">
                   <Search size={16} className="text-stone-400 shrink-0" />
                   <input
                     type="text"
-                    placeholder="Search journal reflections..."
+                    placeholder="Search your reflections..."
                     value={journalSearch}
                     onChange={(e) => setJournalSearch(e.target.value)}
-                    className="flex-1 bg-transparent border-none text-xs outline-none text-stone-800 placeholder-stone-400"
+                    className="flex-1 bg-transparent border-none text-xs outline-none text-stone-850 placeholder-stone-400"
                   />
                 </div>
 
                 <div className="space-y-4 max-h-[460px] overflow-y-auto pr-2 custom-scrollbar">
                   {filteredJournals.length === 0 ? (
-                    <div className="text-center py-12 border border-dashed border-stone-200 rounded-2xl bg-stone-50/50">
-                      <Smile size={32} className="mx-auto text-stone-300 mb-2" />
-                      <p className="text-stone-500 font-serif text-sm">Your reflective path is clear.</p>
-                      <p className="text-stone-400 text-[11px] mt-1">Start writing your thoughts to populate the journal database.</p>
+                    <div className="text-center py-16 border border-dashed border-stone-200 rounded-2xl bg-stone-50/50">
+                      <BookOpen size={32} className="mx-auto text-stone-300 mb-2.5" />
+                      <p className="text-stone-500 font-serif text-sm">Your reflection book is empty.</p>
+                      <p className="text-stone-400 text-[11px] mt-1 font-light">Add your first realization on the left to see entries logged here.</p>
                     </div>
                   ) : (
                     filteredJournals.map((j) => (
@@ -406,32 +413,27 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                         key={j.id}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="p-5 border border-stone-100 rounded-2xl bg-white shadow-sm space-y-3"
+                        className="p-5 border border-stone-150/75 rounded-2xl bg-white shadow-sm space-y-3.5 hover:border-stone-200 transition-colors"
                       >
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="bg-karuna-olive/10 text-karuna-olive text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                              {j.emotion}
-                            </span>
-                            <div className="flex">
-                              {Array.from({ length: 5 }).map((_, i) => (
-                                <Heart 
-                                  key={i} 
-                                  size={11} 
-                                  className={i < j.compassion_rating ? 'text-amber-500 fill-amber-500' : 'text-stone-200'} 
-                                />
-                              ))}
-                            </div>
-                          </div>
-                          
-                          <span className="text-[10px] font-mono text-stone-400">
+                          <span className="bg-karuna-olive/10 text-karuna-olive text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                            {j.emotion}
+                          </span>
+                          <span className="text-[10px] font-mono text-stone-450">
                             {formatDate(j.created_at)}
                           </span>
                         </div>
 
-                        <p className="text-xs text-stone-700 leading-relaxed font-light whitespace-pre-wrap">
+                        <p className="text-xs sm:text-sm text-stone-750 font-light leading-relaxed whitespace-pre-wrap">
                           {j.content}
                         </p>
+
+                        <div className="flex items-center gap-2 pt-2 border-t border-stone-50 text-[10px] font-mono text-stone-400">
+                          <span className="flex items-center gap-1">
+                            <Activity size={12} className="text-amber-500" />
+                            Compassion self-rating: <strong className="text-stone-700 font-bold">{j.compassion_rating} / 5</strong>
+                          </span>
+                        </div>
                       </motion.div>
                     ))
                   )}
@@ -440,21 +442,22 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
             </motion.div>
           )}
 
+          {/* Tab 2: Kindness Ledger */}
           {activeTab === 'kindness' && (
             <motion.div
               key="kindness-tab"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8"
             >
-              {/* Kindness Creation form (5 columns) */}
+              {/* Form Column (5 cols) */}
               <div className="lg:col-span-5 space-y-6">
-                <div className="bg-stone-50 p-6 rounded-2xl border border-stone-100">
-                  <h3 className="font-serif text-lg text-stone-850 mb-4 flex items-center gap-2 font-semibold">
-                    <Sparkles size={18} className="text-amber-500" />
-                    Log Act of Kindness
+                <div className="bg-stone-50/50 p-5 md:p-6 rounded-2xl border border-stone-200/50 space-y-4">
+                  <h3 className="font-serif text-lg text-stone-900 font-bold flex items-center gap-2 pb-2 border-b border-stone-150">
+                    <HeartHandshake size={16} className="text-rose-500" />
+                    Commit Act of Kindness
                   </h3>
                   
                   <form onSubmit={handleSaveKindness} className="space-y-4">
@@ -466,9 +469,9 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                             key={cat}
                             type="button"
                             onClick={() => setKindnessCategory(cat)}
-                            className={`py-2 text-[11px] font-semibold border rounded-xl transition-all ${
+                            className={`py-2 text-[11px] font-semibold border rounded-xl transition-all duration-300 ${
                               kindnessCategory === cat 
-                                ? 'bg-amber-500/10 text-amber-600 border-amber-500/30 ring-1 ring-amber-500/10 font-bold' 
+                                ? 'bg-rose-50 text-rose-600 border-rose-200 ring-2 ring-rose-500/5 font-bold' 
                                 : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-100'
                             }`}
                           >
@@ -478,34 +481,34 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                       </div>
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">What did you do?</label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Bought dynamic warm soup for a neighbor"
+                        placeholder="e.g. Cleared dynamic snow/dirt for a neighbor"
                         value={kindnessTitle}
                         onChange={(e) => setKindnessTitle(e.target.value)}
-                        className="w-full bg-white border border-stone-200 focus:border-karuna-olive/40 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs outline-none text-stone-800 transition-all"
+                        className="w-full bg-white border border-stone-250 focus:border-karuna-olive/50 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs outline-none text-stone-850 transition-all"
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">Why / How did it impact them?</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] uppercase font-bold tracking-wider text-stone-500 block">How did it impact them / yourself?</label>
                       <textarea
                         required
                         rows={3}
-                        placeholder="Detail the response or your internal shift after completing this prosocial task..."
+                        placeholder="Record their response or the internal release you experienced after finishing..."
                         value={kindnessDesc}
                         onChange={(e) => setKindnessDesc(e.target.value)}
-                        className="w-full bg-white border border-stone-200 focus:border-karuna-olive/40 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs outline-none text-stone-800 transition-all resize-none"
+                        className="w-full bg-white border border-stone-250 focus:border-karuna-olive/50 focus:ring-4 focus:ring-karuna-olive/5 rounded-2xl p-4 text-xs outline-none text-stone-850 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSavingKindness || !kindnessTitle.trim() || !kindnessDesc.trim()}
-                      className="olive-button w-full py-3 text-xs flex items-center justify-center gap-2"
+                      className="olive-button !bg-rose-600 hover:!bg-rose-700 shadow-rose-600/10 hover:shadow-rose-600/20 w-full py-3.5 text-xs flex items-center justify-center gap-2"
                     >
                       {isSavingKindness ? (
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -520,25 +523,25 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                 </div>
               </div>
 
-              {/* Kindness acts log feed (7 columns) */}
+              {/* List Feed Column (7 cols) */}
               <div className="lg:col-span-7 space-y-4">
-                <div className="flex items-center gap-2 border border-stone-200 rounded-full px-4 py-2.5 bg-stone-50">
+                <div className="flex items-center gap-2 border border-stone-200 rounded-full px-4 py-2.5 bg-stone-50/70 focus-within:ring-2 focus-within:ring-karuna-olive/15 transition-all">
                   <Search size={16} className="text-stone-400 shrink-0" />
                   <input
                     type="text"
                     placeholder="Search kindness ledger..."
                     value={kindnessSearch}
                     onChange={(e) => setKindnessSearch(e.target.value)}
-                    className="flex-1 bg-transparent border-none text-xs outline-none text-stone-800 placeholder-stone-400"
+                    className="flex-1 bg-transparent border-none text-xs outline-none text-stone-850 placeholder-stone-400"
                   />
                 </div>
 
                 <div className="space-y-4 max-h-[460px] overflow-y-auto pr-2 custom-scrollbar">
                   {filteredKindness.length === 0 ? (
-                    <div className="text-center py-12 border border-dashed border-stone-200 rounded-2xl bg-stone-50/50">
-                      <Award size={32} className="mx-auto text-stone-300 mb-2" />
+                    <div className="text-center py-16 border border-dashed border-stone-200 rounded-2xl bg-stone-50/50">
+                      <Heart size={32} className="mx-auto text-stone-300 mb-2.5" />
                       <p className="text-stone-500 font-serif text-sm">Your kindness ledger is clear.</p>
-                      <p className="text-stone-400 text-[11px] mt-1">Log your first act of kindness to see entries appear here.</p>
+                      <p className="text-stone-400 text-[11px] mt-1 font-light">Record your first tangible act of empathy on the left.</p>
                     </div>
                   ) : (
                     filteredKindness.map((k) => (
@@ -546,23 +549,23 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                         key={k.id}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="p-5 border border-stone-100 rounded-2xl bg-white shadow-sm space-y-3"
+                        className="p-5 border border-stone-150/75 rounded-2xl bg-white shadow-sm space-y-3 hover:border-stone-250 transition-colors"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="bg-amber-500/10 text-amber-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                          <span className="bg-rose-500/10 text-rose-600 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                             {k.category}
                           </span>
-                          <span className="text-[10px] font-mono text-stone-400">
+                          <span className="text-[10px] font-mono text-stone-450">
                             {formatDate(k.created_at)}
                           </span>
                         </div>
 
                         <div>
-                          <h4 className="text-sm font-semibold text-stone-800 flex items-center gap-2">
+                          <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
                             <CheckCircle size={14} className="text-emerald-500 shrink-0" />
                             {k.title}
                           </h4>
-                          <p className="text-xs text-stone-500 mt-1 font-light leading-relaxed">
+                          <p className="text-xs sm:text-sm text-stone-500 mt-1.5 font-light leading-relaxed whitespace-pre-wrap">
                             {k.description}
                           </p>
                         </div>
@@ -574,54 +577,55 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
             </motion.div>
           )}
 
+          {/* Tab 3: Insights Hub */}
           {activeTab === 'insights' && (
             <motion.div
               key="insights-tab"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="space-y-6"
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-8 animate-fade-in"
             >
               {/* Karuna Index Interactive Card */}
-              <div className="bg-stone-50 border border-stone-200/60 p-6 md:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                {/* Column 1: SVG Circular Indicator (5 cols) */}
-                <div className="lg:col-span-5 flex flex-col items-center text-center">
-                  <div className="relative w-44 h-44 flex items-center justify-center">
-                    {/* SVG Radial Progress */}
+              <div className="bg-stone-50/60 border border-stone-200/50 p-6 md:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-2 pointer-events-none" style={{ 
+                  backgroundImage: 'radial-gradient(circle at 1px 1px, #5A5A40 1px, transparent 0)', 
+                  backgroundSize: '16px 16px' 
+                }} />
+
+                {/* Score Dial (5 cols) */}
+                <div className="lg:col-span-5 flex flex-col items-center text-center z-10">
+                  <div className="relative w-40 h-40 flex items-center justify-center">
                     <svg className="w-full h-full -rotate-90">
-                      {/* Background track circle */}
                       <circle
-                        cx="88"
-                        cy="88"
-                        r="76"
-                        className="stroke-stone-200/70"
-                        strokeWidth="10"
+                        cx="80"
+                        cy="80"
+                        r="68"
+                        className="stroke-stone-200/60"
+                        strokeWidth="8"
                         fill="transparent"
                       />
-                      {/* Foreground active indicator circle */}
                       <motion.circle
-                        cx="88"
-                        cy="88"
-                        r="76"
+                        cx="80"
+                        cy="80"
+                        r="68"
                         className={ringColor}
-                        strokeWidth="10"
+                        strokeWidth="8"
                         fill="transparent"
-                        strokeDasharray={477.5}
-                        initial={{ strokeDashoffset: 477.5 }}
-                        animate={{ strokeDashoffset: 477.5 - (karunaIndex / 100) * 477.5 }}
+                        strokeDasharray={427}
+                        initial={{ strokeDashoffset: 427 }}
+                        animate={{ strokeDashoffset: 427 - (karunaIndex / 100) * 427 }}
                         transition={{ duration: 1.2, ease: "easeOut" }}
                         strokeLinecap="round"
                       />
                     </svg>
                     
-                    {/* Inner score reading */}
                     <div className="absolute flex flex-col items-center justify-center">
-                      <span className="text-4xl font-serif font-bold text-stone-800 leading-none">
+                      <span className="text-4xl font-serif font-bold text-stone-900 leading-none">
                         {karunaIndex}
                       </span>
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-stone-400 mt-1">
+                      <span className="text-[8px] uppercase font-bold tracking-widest text-stone-400 mt-1">
                         Karuna Index
                       </span>
                     </div>
@@ -631,20 +635,20 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${rankColor}`}>
                       {rankName}
                     </span>
-                    <p className="text-[11px] text-stone-400 italic max-w-xs mt-2 px-2 leading-relaxed">
+                    <p className="text-[10px] text-stone-400 italic max-w-xs mt-2 px-2 leading-relaxed">
                       "{rankQuote}"
                     </p>
                   </div>
                 </div>
 
-                {/* Column 2: Breakdown and Pillars progress (7 cols) */}
-                <div className="lg:col-span-7 space-y-5">
+                {/* Growth Matrix Progress Bars (7 cols) */}
+                <div className="lg:col-span-7 space-y-5 z-10">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-stone-850 flex items-center gap-2">
-                      <TrendingUp size={20} className="text-karuna-olive" />
+                    <h3 className="font-serif text-lg font-bold text-stone-850 flex items-center gap-2">
+                      <TrendingUp size={18} className="text-karuna-olive" />
                       Empathetic Growth Matrix
                     </h3>
-                    <p className="text-stone-500 text-xs mt-1 leading-relaxed">
+                    <p className="text-stone-500 text-xs mt-1 leading-relaxed font-light">
                       Your Karuna Index represents a holistic calculation of your mindful reflection, active altruism, daily prosocial habits, and compassionate resonance.
                     </p>
                   </div>
@@ -738,8 +742,8 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                 </div>
               </div>
 
-              {/* Actionable Suggestions to Raise Score */}
-              <div className="bg-white border border-stone-100 p-5 rounded-2xl">
+              {/* Instructions to Raise Score Grid */}
+              <div className="bg-white border border-stone-150 p-5 rounded-2xl">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-3 flex items-center gap-1.5">
                   <Info size={14} className="text-karuna-olive" />
                   Pathways to Elevate Empathy Index
@@ -748,32 +752,32 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                   <div className="flex gap-3 items-start p-3 bg-stone-50/50 rounded-xl hover:bg-stone-50 transition-colors">
                     <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
                     <div>
-                      <h5 className="text-xs font-bold text-stone-800">Reflect deeper</h5>
-                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">Write down your daily introspective realizations in your Reflection journal (+5 pts per entry).</p>
+                      <h5 className="text-xs font-bold text-stone-850">Reflect deeper</h5>
+                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed font-light">Write down your daily introspective realizations in your Reflection journal (+5 pts per entry).</p>
                     </div>
                   </div>
                   
                   <div className="flex gap-3 items-start p-3 bg-stone-50/50 rounded-xl hover:bg-stone-50 transition-colors">
                     <span className="w-6 h-6 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
                     <div>
-                      <h5 className="text-xs font-bold text-stone-800">Perform prosocial challenges</h5>
-                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">Log genuine, tangible acts of kindness (listening, helping, sharing) (+6 pts per act).</p>
+                      <h5 className="text-xs font-bold text-stone-850">Perform prosocial challenges</h5>
+                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed font-light">Log genuine, tangible acts of kindness (listening, helping, sharing) (+6 pts per act).</p>
                     </div>
                   </div>
 
                   <div className="flex gap-3 items-start p-3 bg-stone-50/50 rounded-xl hover:bg-stone-50 transition-colors">
                     <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
                     <div>
-                      <h5 className="text-xs font-bold text-stone-800">Embrace habits</h5>
-                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">Look out for prompt-based popup notifications or quotes, clicking 'Accept' to log habitual nudges (+5 pts per nudge).</p>
+                      <h5 className="text-xs font-bold text-stone-850">Embrace habits</h5>
+                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed font-light">Look out for prompt-based notifications, clicking 'I'll do this' to log habitual nudges (+5 pts per nudge).</p>
                     </div>
                   </div>
 
                   <div className="flex gap-3 items-start p-3 bg-stone-50/50 rounded-xl hover:bg-stone-50 transition-colors">
                     <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span>
                     <div>
-                      <h5 className="text-xs font-bold text-stone-800">Cultivate genuine compassion</h5>
-                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">Strive for highly compassionate intents in your reflections. Your average self-reported ratings raise this score significantly.</p>
+                      <h5 className="text-xs font-bold text-stone-850">Cultivate genuine compassion</h5>
+                      <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed font-light">Strive for highly compassionate intents in your reflections. Your self-reported ratings raise this score significantly.</p>
                     </div>
                   </div>
                 </div>
@@ -781,42 +785,42 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
 
               {/* Highlight Stats Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-stone-50 p-6 border border-stone-100 rounded-2xl text-center flex flex-col justify-center">
+                <div className="bg-stone-50/50 p-6 border border-stone-150/70 rounded-2xl text-center flex flex-col justify-center">
                   <div className="w-10 h-10 rounded-full bg-karuna-olive/10 text-karuna-olive flex items-center justify-center mx-auto mb-3">
                     <BookOpen size={18} />
                   </div>
-                  <h4 className="text-2xl font-serif font-bold text-stone-850">{analytics.total_journals}</h4>
-                  <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-widest mt-1">Journal Reflections</p>
+                  <h4 className="text-2xl font-serif font-bold text-stone-900">{analytics.total_journals}</h4>
+                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest mt-1">Journal Reflections</p>
                 </div>
 
-                <div className="bg-stone-50 p-6 border border-stone-100 rounded-2xl text-center flex flex-col justify-center">
+                <div className="bg-stone-50/50 p-6 border border-stone-150/70 rounded-2xl text-center flex flex-col justify-center">
                   <div className="w-10 h-10 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center mx-auto mb-3">
                     <Heart size={18} className="fill-rose-50" />
                   </div>
-                  <h4 className="text-2xl font-serif font-bold text-stone-850">{analytics.total_kindness}</h4>
-                  <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-widest mt-1">Prosocial Acts Logged</p>
+                  <h4 className="text-2xl font-serif font-bold text-stone-900">{analytics.total_kindness}</h4>
+                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest mt-1">Prosocial Acts Logged</p>
                 </div>
 
-                <div className="bg-stone-50 p-6 border border-stone-100 rounded-2xl text-center flex flex-col justify-center">
+                <div className="bg-stone-50/50 p-6 border border-stone-150/70 rounded-2xl text-center flex flex-col justify-center">
                   <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-3">
                     <Activity size={18} />
                   </div>
-                  <h4 className="text-2xl font-serif font-bold text-stone-850">{analytics.avg_compassion} / 5</h4>
-                  <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-widest mt-1">Compassion Score</p>
+                  <h4 className="text-2xl font-serif font-bold text-stone-900">{analytics.avg_compassion} / 5</h4>
+                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest mt-1">Compassion Score</p>
                 </div>
               </div>
 
-              {/* Categorical Breakdown */}
+              {/* Categorical Breakdown Distributions */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Emotions chart */}
-                <div className="bg-stone-50 p-6 border border-stone-100 rounded-2xl">
-                  <h3 className="font-serif text-sm font-semibold text-stone-750 mb-4 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                {/* Emotions breakdown */}
+                <div className="bg-stone-50/50 p-5 border border-stone-200/50 rounded-2xl">
+                  <h3 className="font-serif text-xs font-bold text-stone-500 mb-4 flex items-center gap-1.5 uppercase tracking-wider">
                     <Smile size={14} className="text-karuna-olive" />
                     Emotional Landscape
                   </h3>
                   
                   {analytics.emotions.length === 0 ? (
-                    <div className="text-center py-10 text-stone-400 text-xs">
+                    <div className="text-center py-10 text-stone-450 text-xs font-light">
                       No journal entries to analyze yet.
                     </div>
                   ) : (
@@ -839,15 +843,15 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
                   )}
                 </div>
 
-                {/* Kindness categories chart */}
-                <div className="bg-stone-50 p-6 border border-stone-100 rounded-2xl">
-                  <h3 className="font-serif text-sm font-semibold text-stone-750 mb-4 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                {/* Kindness categories breakdown */}
+                <div className="bg-stone-50/50 p-5 border border-stone-200/50 rounded-2xl">
+                  <h3 className="font-serif text-xs font-bold text-stone-500 mb-4 flex items-center gap-1.5 uppercase tracking-wider">
                     <Sparkles size={14} className="text-amber-500" />
                     Kindness Channels
                   </h3>
                   
                   {analytics.categories.length === 0 ? (
-                    <div className="text-center py-10 text-stone-400 text-xs">
+                    <div className="text-center py-10 text-stone-450 text-xs font-light">
                       No kindness acts logged to analyze yet.
                     </div>
                   ) : (
@@ -872,6 +876,7 @@ export default function KindnessJournal({ userEmail, username }: KindnessJournal
               </div>
             </motion.div>
           )}
+
         </AnimatePresence>
       </div>
     </div>

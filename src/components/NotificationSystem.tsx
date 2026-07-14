@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Sparkles, X, Check, RefreshCw, Volume2 } from 'lucide-react';
+import { Heart, Sparkles, X, Check, RefreshCw, Volume2, Info, Star } from 'lucide-react';
 import { generatePositiveQuoteOrNudge } from '../services/gemini';
 
 interface Notification {
@@ -100,10 +100,10 @@ export default function NotificationSystem() {
       triggerRandomNotification();
     }, 8000);
 
-    // Periodic toast interval (every 50 seconds)
+    // Periodic toast interval (every 60 seconds)
     const periodicInterval = setInterval(() => {
       triggerRandomNotification();
-    }, 50000);
+    }, 60000);
 
     return () => {
       clearTimeout(initialTimer);
@@ -112,7 +112,6 @@ export default function NotificationSystem() {
   }, []);
 
   const triggerRandomNotification = () => {
-    // Alternate or pick randomly
     const isQuote = Math.random() > 0.5;
     let selected: any;
     if (isQuote) {
@@ -126,7 +125,7 @@ export default function NotificationSystem() {
       ...selected
     };
 
-    setNotifications((prev) => [...prev.slice(-2), newNotification]); // Keep max 2 active toasts on screen
+    setNotifications((prev) => [...prev.slice(-1), newNotification]); // Keep max 2 active toasts on screen
   };
 
   const removeNotification = (id: string) => {
@@ -147,10 +146,9 @@ export default function NotificationSystem() {
         action: data.action,
         why: data.why
       };
-      setNotifications((prev) => [...prev.slice(-2), newNotification]);
+      setNotifications((prev) => [...prev.slice(-1), newNotification]);
     } catch (err) {
       console.error(err);
-      // Fallback
       triggerRandomNotification();
     } finally {
       setIsLoadingAI(false);
@@ -164,6 +162,9 @@ export default function NotificationSystem() {
     setStreakCount(newStreak);
     localStorage.setItem('karuna_completed_nudges_count', newCount.toString());
     localStorage.setItem('karuna_nudges_streak', newStreak.toString());
+
+    // Trigger storage event manually to sync other components
+    window.dispatchEvent(new Event('storage'));
 
     setRecentCompletedTitle(nudgeTitle);
     setShowCelebration(true);
@@ -201,7 +202,20 @@ export default function NotificationSystem() {
   return (
     <>
       {/* Toast Pop-up Notifications Container */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4 w-full max-w-[380px] pointer-events-none">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4 w-full max-w-[360px] pointer-events-none">
+        
+        {/* Silent AI spark helper launcher card */}
+        <div className="pointer-events-auto self-end">
+          <button
+            onClick={triggerAIMicroWisdom}
+            disabled={isLoadingAI}
+            className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider bg-white/95 text-karuna-olive hover:text-white hover:bg-karuna-olive transition-all px-4 py-2 rounded-full border border-stone-200/50 shadow-md cursor-pointer active:scale-95 disabled:opacity-50"
+          >
+            <Sparkles size={11} className={isLoadingAI ? "animate-spin" : "animate-pulse"} />
+            <span>{isLoadingAI ? "Generating insight..." : "Seek Micro-Wisdom"}</span>
+          </button>
+        </div>
+
         <AnimatePresence mode="popLayout">
           {notifications.map((notif) => (
             <motion.div
@@ -211,27 +225,27 @@ export default function NotificationSystem() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.2 } }}
               transition={{ type: 'spring', stiffness: 260, damping: 25 }}
-              className="pointer-events-auto w-full bg-white rounded-2xl border border-stone-100 shadow-xl overflow-hidden"
+              className="pointer-events-auto w-full bg-white/95 backdrop-blur-md rounded-2xl border border-stone-200/40 shadow-xl overflow-hidden"
             >
-              <div className="p-5">
+              <div className="p-5 space-y-4">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-3 border-b border-stone-50 pb-2">
+                <div className="flex items-center justify-between border-b border-stone-100 pb-2">
                   <span className="text-[10px] tracking-widest uppercase font-bold text-karuna-olive flex items-center gap-1.5">
-                    <Sparkles size={11} className="animate-pulse text-amber-500" />
+                    <Sparkles size={11} className="text-amber-500 animate-pulse" />
                     {notif.title}
                   </span>
                   
                   <div className="flex items-center gap-1.5">
                     <button 
                       onClick={() => speakNotification(notif)}
-                      className="p-1 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-50 transition-colors"
+                      className="p-1 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-50 transition-colors"
                       title="Listen out loud"
                     >
                       <Volume2 size={12} />
                     </button>
                     <button
                       onClick={() => removeNotification(notif.id)}
-                      className="p-1 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-50 transition-colors"
+                      className="p-1 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-50 transition-colors"
                       title="Dismiss"
                     >
                       <X size={12} />
@@ -242,45 +256,45 @@ export default function NotificationSystem() {
                 {/* Content */}
                 {notif.type === 'quote' ? (
                   <div className="space-y-2">
-                    <p className="font-serif text-sm italic text-stone-800 leading-relaxed">
+                    <p className="font-serif text-sm italic text-stone-800 leading-relaxed font-light">
                       "{notif.quoteText}"
                     </p>
-                    <p className="text-right text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+                    <p className="text-right text-[9px] font-bold tracking-widest text-stone-400 uppercase">
                       — {notif.author}
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <p className="text-sm font-medium text-stone-800 leading-snug">
+                    <p className="text-xs sm:text-sm font-semibold text-stone-850 leading-snug">
                       {notif.action}
                     </p>
-                    <p className="text-xs text-stone-500 leading-relaxed font-light">
-                      <strong className="font-medium text-karuna-olive">Why:</strong> {notif.why}
+                    <p className="text-[11px] text-stone-500 leading-relaxed font-light">
+                      <strong className="font-semibold text-karuna-olive uppercase text-[9px] tracking-wider block mb-0.5">Focus Intent:</strong> {notif.why}
                     </p>
                   </div>
                 )}
 
                 {/* Footer Actions */}
-                <div className="mt-4 pt-3 border-t border-stone-50 flex items-center justify-between">
+                <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
                   {notif.type === 'nudge' ? (
                     <button
                       onClick={() => handleCompleteNudge(notif.title, notif.id)}
-                      className="text-xs bg-karuna-olive/10 hover:bg-karuna-olive hover:text-white text-karuna-olive transition-all px-3 py-1.5 rounded-full flex items-center gap-1.5 font-medium"
+                      className="text-[10px] bg-karuna-olive/10 hover:bg-karuna-olive hover:text-white text-karuna-olive transition-all px-3 py-1.5 rounded-full flex items-center gap-1 font-bold uppercase tracking-wider"
                     >
-                      <Check size={12} />
-                      <span>I'll do this!</span>
+                      <Check size={11} />
+                      <span>Accept Habit</span>
                     </button>
                   ) : (
                     <button
                       onClick={() => removeNotification(notif.id)}
-                      className="text-xs text-stone-500 hover:text-stone-700 font-medium hover:underline"
+                      className="text-[10px] text-stone-500 hover:text-stone-800 font-bold uppercase tracking-wider hover:underline"
                     >
-                      Reflect on this
+                      Absorb Truth
                     </button>
                   )}
                   
-                  <span className="text-[10px] font-mono text-stone-400">
-                    {notif.type === 'quote' ? 'Wisdom' : 'Nudge'}
+                  <span className="text-[10px] font-mono text-stone-400 font-semibold uppercase tracking-wider">
+                    {notif.type === 'quote' ? 'Wisdom' : 'Habit Nudge'}
                   </span>
                 </div>
               </div>
@@ -289,63 +303,30 @@ export default function NotificationSystem() {
         </AnimatePresence>
       </div>
 
-      {/* Celebration Notification Overlay */}
+      {/* Celebration Notification Overlay (Top Slider) */}
       <AnimatePresence>
         {showCelebration && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: -40 }}
+            initial={{ opacity: 0, scale: 0.95, y: -40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -40 }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white rounded-2xl px-6 py-4 shadow-2xl border border-stone-800/80 max-w-md w-full"
+            exit={{ opacity: 0, scale: 0.95, y: -40 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white rounded-2xl px-6 py-4.5 shadow-2xl border border-stone-800/80 max-w-md w-full mx-auto flex items-center gap-4"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-karuna-olive text-white flex items-center justify-center shrink-0 shadow-lg">
-                <Heart size={20} className="fill-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="font-serif text-sm font-semibold text-white">Nudge Completed!</h4>
-                <p className="text-xs text-stone-300 truncate">
-                  Completed challenge: <strong>{recentCompletedTitle}</strong>
-                </p>
-              </div>
-              <div className="text-right pl-2 border-l border-stone-800 shrink-0">
-                <div className="text-xs font-mono text-stone-400 tracking-wider">STREAK</div>
-                <div className="text-lg font-bold font-serif text-amber-400">{streakCount} 🔥</div>
-              </div>
+            <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+              <Star size={18} className="fill-current animate-pulse" />
+            </div>
+            <div className="flex-1 text-left">
+              <span className="text-[9px] font-bold tracking-widest text-amber-400 uppercase block mb-0.5">
+                Compassionate Achievement
+              </span>
+              <h4 className="text-sm font-semibold text-white">Habit Nudge Accepted!</h4>
+              <p className="text-[11px] text-stone-300 font-light mt-0.5">
+                Earned +5 points toward your total Karuna Index. Daily streak: <strong className="font-semibold text-white">{streakCount} days</strong>
+              </p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Floating Action Bar (Spark Kindness and Stats counters) */}
-      <div className="fixed bottom-6 left-6 z-40 flex items-center gap-3">
-        {/* Spark Live AI Wisdom/Nudge Button */}
-        <button
-          onClick={triggerAIMicroWisdom}
-          disabled={isLoadingAI}
-          className="bg-stone-950 text-stone-100 hover:text-white h-11 px-5 rounded-full shadow-lg border border-stone-800 hover:border-karuna-olive/30 transition-all flex items-center gap-2 text-xs font-semibold group cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
-          title="Spark a positive quote or nudge dynamically using AI"
-        >
-          {isLoadingAI ? (
-            <RefreshCw size={14} className="animate-spin text-karuna-olive" />
-          ) : (
-            <Sparkles size={14} className="text-amber-400 group-hover:rotate-12 transition-transform" />
-          )}
-          <span>{isLoadingAI ? 'Generating empathy...' : 'Spark Kindness'}</span>
-        </button>
-
-        {/* Local Kindness counter widget */}
-        {completedCount > 0 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white/90 backdrop-blur-sm border border-stone-200/60 shadow-lg px-4 h-11 rounded-full flex items-center gap-2 text-xs font-mono text-stone-600"
-          >
-            <Heart size={12} className="text-rose-500 fill-rose-50" />
-            <span>Acts Completed: <strong className="text-stone-800 font-bold">{completedCount}</strong></span>
-          </motion.div>
-        )}
-      </div>
     </>
   );
 }
